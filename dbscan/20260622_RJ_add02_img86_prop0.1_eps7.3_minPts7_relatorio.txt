@@ -1,0 +1,110 @@
+============================================================
+TESTE DBSCAN - SEGMENTAÇÃO DE IMAGEM
+============================================================
+ID do teste: 20260622_RJ_add02_img86_prop0.1_eps7.3_minPts7 
+Imagem: RJ_add02_img86 
+Data/hora: 2026-06-22 16:48:52 
+
+--- ESTATÍSTICAS: IMAGEM COMPLETA ---
+       x              y              R                 G                B         
+ Min.   :   1   Min.   :   1   Min.   :0.00000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:2049   1st Qu.:1206   1st Qu.:0.02353   1st Qu.:0.1686   1st Qu.:0.2275  
+ Median :4096   Median :2412   Median :0.05490   Median :0.1725   Median :0.2471  
+ Mean   :4096   Mean   :2412   Mean   :0.05110   Mean   :0.1746   Mean   :0.2449  
+ 3rd Qu.:6144   3rd Qu.:3618   3rd Qu.:0.07843   3rd Qu.:0.1804   3rd Qu.:0.2588  
+ Max.   :8192   Max.   :4823   Max.   :1.00000   Max.   :1.0000   Max.   :1.0000  
+    cluster      
+ Min.   : 0.000  
+ 1st Qu.: 1.000  
+ Median : 1.000  
+ Mean   : 1.003  
+ 3rd Qu.: 1.000  
+ Max.   :81.000  
+
+--- ESTATÍSTICAS: AMOSTRA ---
+       x              y              R                 G                B         
+ Min.   :   1   Min.   :   1   Min.   :0.00000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:2047   1st Qu.:1205   1st Qu.:0.02353   1st Qu.:0.1686   1st Qu.:0.2275  
+ Median :4098   Median :2410   Median :0.05490   Median :0.1725   Median :0.2471  
+ Mean   :4097   Mean   :2411   Mean   :0.05113   Mean   :0.1746   Mean   :0.2449  
+ 3rd Qu.:6145   3rd Qu.:3618   3rd Qu.:0.07843   3rd Qu.:0.1804   3rd Qu.:0.2588  
+ Max.   :8192   Max.   :4823   Max.   :1.00000   Max.   :1.0000   Max.   :1.0000  
+
+--- PARÂMETROS ---
+Proporção da amostra: 0.1 
+N pixels (amostra): 3951001 
+N pixels (total): 39510016 
+minPts: 7 
+'Elbow' para definição do epsilon visível em: 20260622_RJ_add02_img86_prop0.1_eps7.3_minPts7_knndistplot.png 
+eps: 7.3 
+seed: 42 
+
+--- MENSURAÇÕES (tempo) ---
+Tempo de treino (s): 4.62 
+Tempo de predição (s): 539.346 
+Tempo total (s): 543.966 
+
+--- RESULTADOS ---
+Número de clusters encontrados: 23 
+Proporção de ruído (cluster 0): 6e-04 
+
+Distribuição de pixels por cluster:
+   rj_norm_rgb_dbscan_predict     Freq
+1                           0    22466
+2                           1 39481137
+3                           2     1667
+4                           3      215
+5                           5      136
+6                           6      257
+7                           8      501
+8                          10      289
+9                          15      337
+10                         17       84
+11                         19      435
+12                         22      382
+13                         27      168
+14                         34       92
+15                         35      126
+16                         43      368
+17                         48       10
+18                         53       90
+19                         56      487
+20                         69      171
+21                         70      162
+22                         73       98
+23                         80      269
+24                         81       69
+
+RGB médio por cluster:
+   cluster     R_mean    G_mean    B_mean
+1        1 0.05082053 0.1743901 0.2447731
+2        2 0.26946140 0.2414129 0.3225143
+3        3 0.14340173 0.1374191 0.2338167
+4        5 0.30648789 0.2869377 0.2597174
+5        6 0.28343633 0.2489357 0.2364233
+6        8 0.17725334 0.3448867 0.4137999
+7       10 0.27252867 0.2120090 0.2453491
+8       15 0.28000233 0.2629429 0.3124105
+9       17 0.31484594 0.2711951 0.2963585
+10      19 0.25895876 0.2885373 0.3301600
+11      22 0.14998460 0.1946309 0.2490299
+12      27 0.15700280 0.1176471 0.1810691
+13      34 0.15302643 0.1387042 0.2476556
+14      35 0.21851852 0.2498911 0.3348584
+15      43 0.22108909 0.3021633 0.3935848
+16      48 0.29098039 0.3819608 0.4435294
+17      53 0.27516340 0.3603050 0.4236166
+18      56 0.29681524 0.3120023 0.3780328
+19      69 0.17546153 0.1570691 0.2665291
+20      70 0.26889373 0.2247882 0.3475672
+21      73 0.15670268 0.1941977 0.3112045
+22      80 0.22065748 0.3559297 0.3679277
+23      81 0.30616652 0.2135834 0.2207445
+
+Agrupamentos visíveis em:
+20260622_RJ_add02_img86_prop0.1_eps7.3_minPts7_agrupamentos.png
+
+Imagem resultante em .jpg e em .png:
+20260622_RJ_add02_img86_prop0.1_eps7.3_minPts7.jpg 
+20260622_RJ_add02_img86_prop0.1_eps7.3_minPts7.png 
+

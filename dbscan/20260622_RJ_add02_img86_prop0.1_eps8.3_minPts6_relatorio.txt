@@ -1,0 +1,78 @@
+============================================================
+TESTE DBSCAN - SEGMENTAÇÃO DE IMAGEM
+============================================================
+ID do teste: 20260622_RJ_add02_img86_prop0.1_eps8.3_minPts6 
+Imagem: RJ_add02_img86 
+Data/hora: 2026-06-22 15:46:56 
+
+--- ESTATÍSTICAS: IMAGEM COMPLETA ---
+       x              y              R                 G                B         
+ Min.   :   1   Min.   :   1   Min.   :0.00000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:2049   1st Qu.:1206   1st Qu.:0.02353   1st Qu.:0.1686   1st Qu.:0.2275  
+ Median :4096   Median :2412   Median :0.05490   Median :0.1725   Median :0.2471  
+ Mean   :4096   Mean   :2412   Mean   :0.05110   Mean   :0.1746   Mean   :0.2449  
+ 3rd Qu.:6144   3rd Qu.:3618   3rd Qu.:0.07843   3rd Qu.:0.1804   3rd Qu.:0.2588  
+ Max.   :8192   Max.   :4823   Max.   :1.00000   Max.   :1.0000   Max.   :1.0000  
+    cluster  
+ Min.   : 0  
+ 1st Qu.: 1  
+ Median : 1  
+ Mean   : 1  
+ 3rd Qu.: 1  
+ Max.   :41  
+
+--- ESTATÍSTICAS: AMOSTRA ---
+       x              y              R                 G                B         
+ Min.   :   1   Min.   :   1   Min.   :0.00000   Min.   :0.0000   Min.   :0.0000  
+ 1st Qu.:2047   1st Qu.:1205   1st Qu.:0.02353   1st Qu.:0.1686   1st Qu.:0.2275  
+ Median :4098   Median :2410   Median :0.05490   Median :0.1725   Median :0.2471  
+ Mean   :4097   Mean   :2411   Mean   :0.05113   Mean   :0.1746   Mean   :0.2449  
+ 3rd Qu.:6145   3rd Qu.:3618   3rd Qu.:0.07843   3rd Qu.:0.1804   3rd Qu.:0.2588  
+ Max.   :8192   Max.   :4823   Max.   :1.00000   Max.   :1.0000   Max.   :1.0000  
+
+--- PARÂMETROS ---
+Proporção da amostra: 0.1 
+N pixels (amostra): 3951001 
+N pixels (total): 39510016 
+minPts: 6 
+'Elbow' para definição do epsilon visível em: 20260622_RJ_add02_img86_prop0.1_eps8.3_minPts6_knndistplot.png 
+eps: 8.3 
+seed: 42 
+
+--- MENSURAÇÕES (tempo) ---
+Tempo de treino (s): 4.945 
+Tempo de predição (s): 585.409 
+Tempo total (s): 590.354 
+
+--- RESULTADOS ---
+Número de clusters encontrados: 7 
+Proporção de ruído (cluster 0): 4e-04 
+
+Distribuição de pixels por cluster:
+  rj_norm_rgb_dbscan_predict     Freq
+1                          0    16001
+2                          1 39492036
+3                          4      967
+4                          5       64
+5                         10      571
+6                         12       16
+7                         17      348
+8                         41       13
+
+RGB médio por cluster:
+  cluster     R_mean    G_mean    B_mean
+1       1 0.05088893 0.1744224 0.2447994
+2       4 0.21636353 0.3479003 0.4280877
+3       5 0.37003676 0.2675858 0.2494485
+4      10 0.32663027 0.3450156 0.4082346
+5      12 0.24656863 0.2791667 0.3112745
+6      17 0.24486139 0.3827812 0.3931373
+7      41 0.16470588 0.3333333 0.3282051
+
+Agrupamentos visíveis em:
+20260622_RJ_add02_img86_prop0.1_eps8.3_minPts6_agrupamentos.png
+
+Imagem resultante em .jpg e em .png:
+20260622_RJ_add02_img86_prop0.1_eps8.3_minPts6.jpg 
+20260622_RJ_add02_img86_prop0.1_eps8.3_minPts6.png 
+
