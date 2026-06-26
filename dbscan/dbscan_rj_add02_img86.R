@@ -1,8 +1,17 @@
+# CONTINUARM plot cor
+# 20260619_RJ_add02_img86_prop0.3_eps3.6_minPts620260619_RJ_add02_img86_prop0.3_eps3.6_minPts6
+
+# TODO
+# Cabeçalho
+
 # Carregar pacotes
 library(imager)
 library(dplyr)
 library(tidyr)
 library(dbscan)
+
+# Definir diretório de trabalho, se necessário
+#setwd()
 
 # Importação das imagens
 # Carregar a imagem
@@ -22,7 +31,7 @@ names(rj_add02_img86_matriz)[3:5] <- c("R", "G", "B")
 str(rj_add02_img86_matriz)
 # x = coordenadas x do pixel = integer
 # y = coordenadas y do pixel = integer
-# R, G e B = valor do pixel para cada canal
+# R, G, B = valor do pixel para cada canal
 
 # Dimensões da matriz
 dim(rj_add02_img86_matriz)
@@ -38,7 +47,7 @@ seed <- 42
 set.seed(seed)
 
 # Setar porcentagem amostra
-prop <- 0.1
+prop <- 0.2
 rj <- rj_add02_img86_matriz %>% slice_sample(prop = prop)
 dim(rj)
 summary(rj)
@@ -59,7 +68,7 @@ minPts <- dim(rj_norm_rgb)[2] + 1
 
 # Eps (epsilon) com base no método de elbow
 kNNdistplot(rj_norm_rgb, minPts = minPts) 
-eps <- 5.5
+eps <- 4.5
 abline(h = eps, lty = 2)
 title(main = paste0(img, " - Definição do eps para o DBSCAN com base no 'elbow' com minPts = ", minPts))
 
@@ -80,18 +89,22 @@ tempo_treino <- system.time({
 rj_norm_rgb_dbscan_model <- dbscan(rj_norm_rgb, eps = eps, minPts = minPts)
 })
 
-# Predizer com o dbscan com a matriz original com mensuração do tempo cronológico e uso de processador
+# Predição com o dbscan com a matriz original com mensuração do tempo cronológico e uso de processador
 tempo_predicao <- system.time({ 
 rj_norm_rgb_dbscan_predict <- predict(rj_norm_rgb_dbscan_model, rj_add02_img86_matriz, rj_norm_rgb)
 })
 
-# Visualizar os clusters
-plot(rj_norm_rgb_dbscan_predict, main = paste0(img, " - Agrupamentos DBSCAN com eps = ", eps, " minPts = ", minPts))
-
-# TODO plots coloridos após entender o que significam
-plot(rj_norm_rgb_dbscan_predict, col=rj_norm_rgb_dbscan_predict, main = paste0(img, " - Agrupamentos DBSCAN com eps = ", eps, " minPts = ", minPts))
-
+# Resultados
+# Tabela dos clusters
 table(rj_norm_rgb_dbscan_predict)
+
+# Visualização dos clusters
+plot(
+  rj_norm_rgb_dbscan_predict, 
+  col=rj_norm_rgb_dbscan_predict, 
+  main = paste0(
+    img, " - Agrupamentos DBSCAN treinado com amostra de ", prop*100, "% eps = ", eps, " minPts = ", minPts))
+
 # Salvar manualmente Agrupamentos DBSCAN usando a string abaixo
 agrupamentos <- paste0(id_teste,"_agrupamentos")
 agrupamentos
@@ -328,6 +341,7 @@ cat("-", arquivo_csv, "(linha adicionada ao comparativo)\n")
 #
 # TODO plots coloridos após entender o que significam
 
+# PERGUNTAS
 # Será que o modelo funciona para imagens similares?
 
 # Importação das imagens
@@ -348,7 +362,7 @@ names(rj_add02_img56_matriz)[3:5] <- c("R", "G", "B")
 str(rj_add02_img56_matriz)
 # x = coordenadas x do pixel = integer
 # y = coordenadas y do pixel = integer
-# R, G e B = valor do pixel para cada canal
+# R, G, B = valor do pixel para cada canal
 
 # Dimensões da matriz
 dim(rj_add02_img56_matriz)
@@ -356,17 +370,15 @@ dim(rj_add02_img56_matriz)
 # Resumo estatístico
 summary(rj_add02_img56_matriz)
 
-# Predizer com o dbscan
+# Predição com o dbscan
 rj_add02_img56_dbscan_predict <- predict(rj_norm_rgb_dbscan_model, rj_add02_img56_matriz, rj_norm_rgb)
 
-# Visualizar os clusters
-plot(rj_add02_img56_dbscan_predict, main = paste0(img, " - Agrupamentos DBSCAN com eps = ", eps, " minPts = ", minPts))
-
-# TODO plots coloridos após entender o que significam
-plot(rj_add02_img56_dbscan_predict, col=rj_add02_img56_dbscan_predict, main = paste0(img, " - Agrupamentos DBSCAN com eps = ", eps, " minPts = ", minPts))
-
+# Resultados
 # Tabela dos clusters
 table(rj_add02_img56_dbscan_predict)
+
+# Visualização dos clusters
+# 
 
 # Anexar o cluster predito à matriz completa
 rj_add02_img56_matriz$cluster <- rj_add02_img56_dbscan_predict
@@ -431,6 +443,6 @@ plot(rj_add02_img56_dbscan, main = id_teste)
 # Salvar imagem resultante em .jpg
 save.image(rj_add02_img56_dbscan,"rj_add02_img56_dbscan.jpg")
 
-# TODO
+# PERGUNTAS
 # O resultado mostrou a influência do DBSCAN ter sido treinado com a localização dos pixels da imagem de treino
-#a pensar, experimentar treinar só com valores R, G  e B?
+#a pensar, experimentar treinar só com valores RGB? Mas o kNNdisplot fica estranho
