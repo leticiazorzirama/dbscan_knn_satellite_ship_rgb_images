@@ -1,0 +1,55 @@
+%% Pacotes
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\usepackage{setspace}
+\usepackage{indentfirst}
+\usepackage{caption}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{hyperref}
+%%\usepackage[authoryear,round]{natbib}
+
+%% Espaçamento entre linhas
+\setstretch{1.15}
+
+%% Identação de parágrafo
+\setlength{\parindent}{1.25cm}
+\setlength{\parskip}{0pt}
+
+%% Legendas um pouco menores
+\captionsetup{
+    font=footnotesize,
+    labelfont=bf,
+    justification=justified,
+    singlelinecheck=false
+}
+
+%% Hyperlink entre referencias...
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  citecolor=blue,
+  urlcolor=blue,
+  pdfborder={0 0 0}
+}
+
+%% Cabeçalho e rodapé
+\pagestyle{fancy}
+\fancyhf{}
+
+\fancyhead[L]{\includegraphics[height=1.1cm]{figuras/logo_univali_esquerda.png}}
+\fancyfoot[C]{\thepage\ de \pageref{LastPage}}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+%% Garante o mesmo estilo na primeira página
+\fancypagestyle{plain}{
+  \fancyhf{}
+  \fancyhead[L]{\includegraphics[height=1.1cm]{figuras/logo_univali_esquerda.png}}
+  \fancyfoot[C]{\thepage\ de \pageref{LastPage}}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \renewcommand{\footrulewidth}{0pt}
+}

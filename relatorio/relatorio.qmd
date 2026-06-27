@@ -1,0 +1,84 @@
+---
+title: |
+  Agrupamento de pixels com DBSCAN para segmentação de barcos com kNN em imagens do Google Earth Pro \newline
+
+subtitle: |
+  \small Universidade do Vale do Itajaí - UNIVALI \
+  Programa de pós-graduação em Computação Aplicada - PPGCA \
+  Disciplina de Aprendizado de Máquina \
+  Profs. Drs. Anita Maria da Rocha Fernandes, Raimundo Celeste Ghizoni Teive e Felipe Viel
+
+author: "Letícia Zorzi Rama"
+date: today
+lang: pt-BR
+
+format:
+  pdf:
+    documentclass: article
+
+    classoption:
+      - 12pt
+      - a4paper
+      - openany
+    geometry:
+      - top=3cm
+      - bottom=2.5cm
+      - left=2.5cm
+      - right=2.5cm
+      - headheight=32pt
+      - headsep=20pt
+    toc: true
+    toc-depth: 3
+    number-sections: true
+    colorlinks: true
+    linkcolor: blue
+    urlcolor: blue
+    citecolor: blue
+    
+    include-in-header:
+      - header.tex
+
+bibliography: referencias.bib
+csl: frontiers-in-marine-science.csl      
+
+execute:
+  echo: false
+  warning: false
+  message: false
+---
+
+# Contextualização
+
+Contextualização do problema escolhido e sua relevância.
+
+# Fundamentação teórica
+
+A área da inteligência artificial tem o aprendizado de máquina como subárea. @russell_inteligencia_2013 enquadram oito conceituações de inteligência artificial em quatro abordagens. Duas dessas se relacionam ao raciocínio e as outras duas ao comportamento. As abordagens ainda são distinguidas entre aquelas cuja a inteligência humana será a referência para a comparação do desempenho de uma inteligência artificial e aquelas cuja a comparação será com a racionalidade enquanto referencial de inteligência ideal. Agentes racionais é a abordagem escolhida para a principal conceituação de inteligência artificial ao longo do livro. Por agentes, significa que está relacionada ao comportamento. Por racionais, à racionalidade. Racionalidade essa baseada em padrões matematicamente definidos o que permite a construção de modelos que não apenas compreendem o ambiente, mas também processam informações complexas. Sendo assim, a inteligência artificial pode ser definida por agentes racionais que agem para alcançar o melhor resultado possível ou esperado. Nessa perspectiva, o aprendizado de máquina será, portanto, agentes racionais aperfeiçoando seu comportamento através de suas próprias experiências [@russell_inteligencia_2013]. 
+
+O aprendizado através da experiência está fortemente relacionado ao reconhecimento de padrões. @bishop_pattern_2006 comenta como o ato de reconhecer padrões acompanha a história da espécie humana e continua no momento em que tais descobertas se automatizaram por algoritmos computacionais. Dentro disso, o autor argumenta que melhores resultados podem ser obtidos através do aprendizado de máquina. Essa tecnologia utiliza algoritmos computacionais para a descoberta automática de regularidades em conjuntos de dados, aplicando esse conhecimento em regressões e classificações. O objetivo central é criar modelos capazes de generalizar suas ações para dados que não foram incluídos no treinamento inicial [@bishop_pattern_2006]. Para @russell_inteligencia_2013, a partir de uma coleção de pares de entrada e saída, o aprendizado de máquina permite se descobrir uma função que prevê a saída para novas entradas.
+
+Existem três tipos ou feedbacks principais de aprendizagem de máquina: não supervisionado, supervisionado e por reforço. No aprendizado não supervisionado, o agente aprende padrões na entrada sem nenhum feedback explicitamente fornecido [@russell_inteligencia_2013]. Em outras palavras, o treinamento do algoritmo compreende dados de entrada sem qualquer dado de saída correspondente [@bishop_pattern_2006]. Um dos objetivos do aprendizado supervisionado é agrupar dados similares e separar dados dissimilares. Exemplos de algoritmos
+
+O aprendizado supervisionado, por outro lado, compreende     
+
+# Metodologia
+
+Descrição do dataset utilizado, preparação dos dados e ferramentas adotadas.
+
+# Desenvolvimento
+
+Aplicação prática das técnicas de IA propostas. Escolher uma das quatro alternativas. Escolher pelo menos duas opções A, B, C.
+
+# Resultados
+
+Apresentação e análise dos resultados obtidos.
+
+# Discussão
+
+Discussão crítica sobre limitações, vantagens e aplicações reais.
+
+# Considerações finais e aprendizados obtidos
+
+Considerações finais e aprendizados obtidos.
+
+# Referências

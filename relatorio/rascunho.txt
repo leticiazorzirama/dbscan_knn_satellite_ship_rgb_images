@@ -1,0 +1,98 @@
+﻿Introdução: Contextualização do problema escolhido e sua relevância.
+Fundamentação Teórica: Descrição dos conceitos de aprendizado
+supervisionado, não supervisionado e por reforço.
+Metodologia: Descrição do dataset utilizado, preparação dos dados e ferramentas
+adotadas.
+Desenvolvimento: Aplicação prática das técnicas de IA propostas. Escolher
+uma das quatro alternativas. Escolher pelo menos duas opções A, B, C.
+Resultados: Apresentação e análise dos resultados obtidos.
+Discussão: Discussão crítica sobre limitações, vantagens e aplicações reais.
+Conclusão: Conclusões finais e aprendizados obtidos.
+
+Contextualização do problema escolhido e sua relevância:
+
+Aprendizado não supervisionado:
+Processamento de imagem de satélite como etapa preparatória para treinamento de modelos de aprendizado de máquina
+Relevância na melhoria do desempenho e eficiência do modelo
+
+Bishop:
+Preprocessing
+For most practical applications, the original input variables are typically preprocessed to transform them into some new space of variables where, it is hoped, the pattern recognition problem will be easier to solve.
+(…)
+Pre-processing might also be performed in order to speed up computation. For example, if the goal is real-time face detection in a high-resolution video stream, the computer must handle huge numbers of pixels per second, and presenting these directly to a complex pattern recognition algorithm may be computationally infeasible. Instead, the aim is to find useful features that are fast to compute, and yet that also preserve useful discriminatory information enabling faces to be distinguished from non-faces. These features are then used as the inputs to the pattern recognition algorithm. For instance, the average value of the image intensity over a rectangular subregion can be evaluated extremely efficiently (Viola and Jones, 2004), and a set of such features can prove very effective in fast face detection. Because the number of such features is smaller than the number of pixels, this kind of pre-processing represents a form of dimensionality reduction.
+
+Aprendizado supervisionado:
+Segmentação?
+
+Fundamentação Teórica:
+
+Russel:
+(aprendizagem de máquina) a partir de uma coleção de pares de entrada e saída, aprender uma função que prevê a saída para novas entradas.
+
+Bishop:
+The field of pattern recognition is concerned with the automatic discovery of regularities in data through the use of computer algorithms and with the use of these regularities to take actions such as classifying the data into different categories.
+(...)
+handcrafted rules or heuristics
+(…)
+Far better results can be obtained by adopting a machine learning approach in which a large set of N digits {x1, . . . , xN } called a training set is used to tune the parameters of an adaptive model.
+
+Bishop
+Aprendizado supervisionado:
+Applications in which the training data comprises examples of the input vectors along with their corresponding target vectors are known as supervised learning problems. Cases such as the digit recognition example, in which the aim is to assign each input vector to one of a finite number of discrete categories, are called classification problems. If the desired output consists of one or more continuous variables, then the task is called regression. An example of a regression problem would be the prediction of the yield in a chemical manufacturing process in which the inputs consist of the concentrations of reactants, the temperature, and the pressure.  
+
+Aprendizado não supervisionado:
+In other pattern recognition problems, the training data consists of a set of input vectors x without any corresponding target values. The goal in such unsupervised learning problems may be to discover groups of similar examples within the data, where it is called clustering, or to determine the distribution of data within the input space, known as density estimation, or to project the data from a high-dimensional space down to two or three dimensions for the purpose of visualization.
+
+Aprendizado por reforço:
+Finally, the technique of reinforcement learning (Sutton and Barto, 1998) is concerned with the problem of finding suitable actions to take in a given situation in order to maximize a reward. Here the learning algorithm is not given examples of optimal outputs, in contrast to supervised learning, but must instead discover them by a process of trial and error. Typically there is a sequence of states and actions in which the learning algorithm is interacting with its environment. In many cases, the current action not only affects the immediate reward but also has an impact on the reward at all subsequent time steps.
+
+Russel:
+Feedback para aprender
+
+Existem três tipos de feedback que determinam os três principais tipos de aprendizagem:
+
+Na aprendizagem não supervisionada, o agente aprende padrões na entrada, embora não seja
+fornecido nenhum feedback explícito. A tarefa mais comum de aprendizagem não supervisionada é o
+agrupamento: a detecção de grupos de exemplos de entrada potencialmente úteis. Por exemplo, umagente de táxi pode desenvolver gradualmente um conceito de “dia de tráfego bom” e “dia de tráfego ruim” sem nunca ter sido rotulados exemplos de cada um deles por um professor.
+
+Em aprendizagem por reforço, o agente aprende a partir de uma série de reforços —recompensas ou punições. Por exemplo, a falta de gorjeta ao final de uma corrida dá ao agente do
+táxi a indicação de que algo saiu errado. Os dois pontos de vitória no final de um jogo de xadrez
+informam ao agente que fez a coisa certa. Cabe ao agente decidir qual das ações anteriores ao
+reforço foram as maiores responsáveis por isso.
+
+Na aprendizagem supervisionada, o agente observa alguns exemplos de pares de entrada e saída,
+e aprende uma função que faz o mapeamento da entrada para a saída. No componente 1 dos
+parágrafos anteriores, as entradas são percepções e a saída é fornecida por um instrutor que diz
+“Freie!” ou “Vire à esquerda”. No componente 2, as entradas são imagens da câmera, e as saídas
+vêm de um instrutor que diz “isso é ônibus”. Em 3, a teoria da frenagem é uma função de estados e
+ações de frenagem até a distância de parada. Nesse caso, o valor da saída está disponível
+diretamente da percepção do agente (após o fato); o ambiente é o instrutor.
+
+Na prática, essas distinções nem sempre são tão nítidas. Na aprendizagem semissupervisionada,
+são dados alguns poucos exemplos rotulados e deve-se fazer o que puder de uma grande coleção de
+exemplos não rotulados. Mesmo os rótulos em si podem não ser as verdades oraculares que
+esperamos. Imagine que você esteja tentando construir um sistema para adivinhar a idade de uma
+pessoa a partir de uma foto. Você reúne alguns exemplos rotulados tirando fotos das pessoas e
+perguntando a idade. Isso é aprendizagem supervisionada. Mas, na realidade, algumas das pessoas
+mentiram sua idade. Não é só que haja ruído aleatório nos dados, mas as imprecisões são
+sistemáticas, e descobri-las é um problema de aprendizagem não supervisionada, envolvendo
+imagens, idades autorrelatadas e idades (desconhecidas) verdadeiras. Assim, tanto ruído como falta
+de rótulos cria um continuum entre aprendizagem supervisionada e não supervisionada.
+
+Metodologia:
+Descrição do dataset utilizado (base de dados customizada)
+Preparação dos dados (parte do pré-processamento no código)
+Ferramentas adotadas (google earth pro, linguagem R, interpretador Positron)
+
+Ferramentas adotadas:
+DBSCAN (Ester et al., 1996)
+pacote R dbscan, incluindo kNNdisplot (Hashler et al., 2019)
+
+Resultados: 
+Apresentação e análise dos resultados obtidos.
+
+Discussão: 
+Discussão crítica sobre limitações, vantagens e aplicações reais.
+
+Conclusão: 
+Conclusões finais e aprendizados obtidos.
