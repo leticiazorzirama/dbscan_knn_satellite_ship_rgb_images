@@ -1,6 +1,3 @@
-# CONTINUARM plot cor
-# 20260619_RJ_add02_img86_prop0.3_eps3.6_minPts620260619_RJ_add02_img86_prop0.3_eps3.6_minPts6
-
 # TODO
 # Cabeçalho
 
@@ -11,7 +8,7 @@ library(tidyr)
 library(dbscan)
 
 # Definir diretório de trabalho, se necessário
-#setwd()
+setwd("dbscan")
 
 # Importação das imagens
 # Carregar a imagem
@@ -47,7 +44,7 @@ seed <- 42
 set.seed(seed)
 
 # Setar porcentagem amostra
-prop <- 0.2
+prop <- 0.1
 rj <- rj_add02_img86_matriz %>% slice_sample(prop = prop)
 dim(rj)
 summary(rj)
@@ -68,7 +65,7 @@ minPts <- dim(rj_norm_rgb)[2] + 1
 
 # Eps (epsilon) com base no método de elbow
 kNNdistplot(rj_norm_rgb, minPts = minPts) 
-eps <- 4.5
+eps <- 5.7
 abline(h = eps, lty = 2)
 title(main = paste0(img, " - Definição do eps para o DBSCAN com base no 'elbow' com minPts = ", minPts))
 
@@ -336,10 +333,6 @@ cat("-", arquivo_csv, "(linha adicionada ao comparativo)\n")
 #8. Amostra mínima, minPts = dim + 1 e eps = eps < eps elbow
 #pensar para os próximos, não só apertar botão
 #como interpretar os gráficos knndistplot e agrupamentos?
-#
-#
-#
-# TODO plots coloridos após entender o que significam
 
 # PERGUNTAS
 # Será que o modelo funciona para imagens similares?

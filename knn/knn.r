@@ -18,7 +18,8 @@
 library(imager)
 
 # Definir diretório de trabalho, se necessário
-#setwd()
+getwd()
+setwd("/media/ramaleticia/3202be5f-767f-4a29-8b6f-7301fe013db6/mca/aprendizado_maquina_COMPLETAR_REPOSITORIO_GITHUB/vers/atividade_avaliativa/dbscan_knn_satellite_ship_rgb_images/knn")
 
 ## X = dados de treino
 ## Xp = dados de teste
@@ -27,14 +28,15 @@ library(imager)
 ## Retorna o valor média dos k vizinhos mais próximos
 fknn <- function(X, Xp, cl, k = 1)
 {
-    out <- nabor::knn(X, Xp, k=k)
+    out <- nabor::knn(X, Xp, k = k)
     cl[as.vector(out$nn.idx)] %>% matrix(dim(out$nn.idx)) %>% rowMeans
 }
 
 # Carregar imagens
 # Imagem original
-# img <- load.image("knn/RJ_add02_img86.jpg")
-# plot(img)
+id_img <- "20260623_RJ_add02_img86_prop0.1_eps5.5_minPts6"
+img <- load.image(paste0(id_img, ".jpg"))
+plot(img)
 
 # Melhor resultado do dbscan até o momento
 # img <- load.image("knn/20260623_RJ_add02_img86_prop0.1_eps5.5_minPts6.jpg")
@@ -45,16 +47,20 @@ fknn <- function(X, Xp, cl, k = 1)
 # Criar dados de treinamento 
 
 # Amostrar regiões de background (não barco) e foreground (barco)
+dim(img)
+area_img <- nrow(img) * ncol(img)  # 3951002 px²
+prop <- 0.0001 # amostras da imagem de 0.01%
+amostra <- sqrt(area_img * prop) # amostras terão área de 62.85x62.85 pixels
 
-# Retângulo com coordenadas x0, y0, x1, y1
-# grabRect(img) permite desenhar um quadrilátero na imagem e obter tais coordenadas
-grabRect(img)
-bg <- c(332, 358, 613, 463) # coordenadas background
-fg <- c(3610, 2354, 3716, 2423 ) # coordenadas foreground
-
+grabPoint(img)
+# Coordenadas x, y inicializam o quadrilátero no canto superior esquerdo
+# Coordenada do canto inferior direito = coordenada canto superior esquerdo + amostra
+# para se obter a área amostrada
+bg <- c(3786, 2228, 3786 + amostra, 2228 + amostra) 
+fg <- c(3613, 2336, 3613 + amostra, 2336 + amostra) 
+ 
 # Filtrar pixels conforme as coordenadas de background e foreground
-# Xc() e Yc() retornam coordenadas dos pixels de uma imagem como pixel sets
-
+# Xc() e Yc() retornam coordenadas dos pixels de uma imagem como pixel sets de valores booleanos
 # Par c(1,3) são (x0, x1) e par c(2,4) são c(y0, y1)
 px.bg <- ((Xc(img) %inr% bg[c(1,3)]) & (Yc(img) %inr% bg[c(2,4)])) # pixel set background
 plot(px.bg)
@@ -63,6 +69,11 @@ plot(px.fg)
 
 # Verificar regiões de background e foreground na imagem 
 plot(img)
+title(
+    main = paste0("Dados de treinamento do kNN: amostras de ", id_img, " processada com DBSCAN"),
+    sub = paste0("Tamanho da amostra: ", round(amostra, 2), " x ", round(amostra, 2), " pixels (", prop * 100, "% da imagem).\n",
+    "Caixa azul: superfície do mar (background) - ", "Caixa vermelha: barco (foreground)"),
+)
 highlight(px.bg, col="blue")
 highlight(px.fg, col="red")
 
@@ -88,33 +99,43 @@ test.mat <- cvt.mat(px.all(img))
 
 # Treinar fkNN 
 
-# A saída é a proporção de pixels do foreground pixels entre k-nearest neighbours
+# A saída é a proporção de pixels do foreground pixels entre k vizinhos mais próximos
 # funciona como uma medida de confiança
 
 # Teste com 6-nn
-knn.6 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = 6)
-mask.6 <- as.cimg(rep(knn.6, 3), dim = dim(img))
-plot(mask.6)
+k <- 6
+knn6 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+mask6 <- as.cimg(rep(knn6, 3), dim = dim(img))
+plot(mask6)
+title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
 
 # Teste com 5-nn
-knn.5 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = 5)
-mask.5 <- as.cimg(rep(knn.5, 3), dim = dim(img))
-plot(mask.5)
+k <- 5
+knn5 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+mask5 <- as.cimg(rep(knn5, 3), dim = dim(img))
+plot(mask5)
+title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
 
 # Teste com 4-nn
-knn.4 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = 4)
-mask.4 <- as.cimg(rep(knn.4, 3), dim = dim(img))
-plot(mask.4)
+k <- 4
+knn4 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+mask4 <- as.cimg(rep(knn4, 3), dim = dim(img))
+plot(mask4)
+title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
 
 # Teste com 3-nn
-knn.3 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = 3)
-mask.3 <- as.cimg(rep(knn.3, 3), dim = dim(img))
-plot(mask.3)
+k <- 3
+knn3 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+mask3 <- as.cimg(rep(knn3, 3), dim = dim(img))
+plot(mask3)
+title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
 
 # Teste com 2-nn
-knn.2 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = 2)
-mask.2 <- as.cimg(rep(knn.2, 3), dim = dim(img))
-plot(mask.2)
+k <- 2
+knn2 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+mask2 <- as.cimg(rep(knn2, 3), dim = dim(img))
+plot(mask2)
+title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
 
 # TODO
 # Entender melhor o código
