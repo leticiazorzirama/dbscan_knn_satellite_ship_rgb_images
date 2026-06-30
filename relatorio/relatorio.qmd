@@ -47,9 +47,23 @@ execute:
   message: false
 ---
 
-# Contextualização
+# Contextualização 
 
-Contextualização do problema escolhido e sua relevância.
+Imagens ópticas de satélite vêm sendo amplamente utilizadas em visão computacional para a detecção de embarcações com algoritmos de aprendizado de máquina. Os principais motivos residem na facilidade de interpretação, na riqueza de dados com diferentes bandas e resoluções espectrais, nos níveis de detalhes os quais podem chegar na escala submétrica através das altas resoluções espaciais, além da maior disponibilidade de imagens quando comparadas às de radar. Esse aumento tem sido influenciado pelo crescente lançamento e modernização de satélites de imageamento [@zhao2024_ship_detection_advances]. Desta maneira, a literatura científica, atualmente, fornece não apenas uma vasta gama de algoritmos especificamente desenvolvidos para a detecção de embarcações como igualmente diversas bases de treinamentos compostas por imagens ópticas de satélite com a presença barcos [@er_ship_2023; @zhang_development_2024].
+
+Entretanto, dada a sua complexidade, o imageamento de ambientes marinhos apresenta uma série de desvantagens. Imagens ópticas de satélite dependem de condições ambientais favoráveis e da luminosidade natural já que são dados gerados por sensores passivos. Os ambientes marinhos são considerados fisicamente complexos com uma dinâmica intensa de neblina, nuvens, sombras, ondulações as quais podem dificultar a reflexão ideal das ondas eletromagnéticas a serem recebidas pelos sensores [@zhao2024_ship_detection_advances]. Por isso, os requisitos dos sensores satelitais ópticos muitas vezes não são plenamente atendidos durante um imageamento e a qualidade das imagens resultantes nem sempre será a ideal (@fig-COR03_img05). Portanto, técnicas de pré-processamento podem ser aplicadas para melhorar a qualidade das imagens na construção de bases de dados impactando positivamente no desempenho dos algoritmos [@teixeira_literature_2022].
+
+![Imagem óptica de satélite de ambiente marinho. Fonte: Google Earth Pro, 2026.](figuras/COR03_img05.jpg){#fig-COR03_img05 fig-align="center" width=60%}
+
+A detecção de embarcações ainda é desafiadora devido às características particulares destes tipos de objetos. Há uma ampla diversidade de veículos marítimos para diferentes fins, abrangendo desde navios militares, turísticos e recreativos até aqueles comerciais como os de pesca. Além dessa diversidade interclasse, há ainda uma diversidade intraclasse cujos barcos para o mesmo fim variam em suas engenharias, apresentando diferentes formatos, cores, comprimentos, larguras e composição de materiais [@zhang_shiprsimagenet_2021]. Atendo-se às embarcações pesqueiras no Brasil, por exemplo, parte-se de uma heterogeneidade entre aquelas industriais e artesanais, comprimentos podem variar de 2 a 30 metros de comprimento, barcos do mesmo tipo podem ter formatos distintos entre as regiões brasileiras, além das diferentes modalidades de pesca as quais consistem em diferentes petrechos [@oliveira_catalogo_2020]. Exemplo disso são os barcos de arrasto, de cerco, de vara e isca viva e de espinhel. Tal diversidade pode ser observada na @fig-NITE02_img34_meta. Consequentemente, a qualidade das imagens é uma fator determinante para uma efetiva detecção de embarcações em visão computacional, sobretudo se há pretensões de classificações em níveis mais finos.
+
+![Imagem óptica de satélite de porto pesqueiro brasileiro ilustrando a diversidade de embarcações de pesca. Fonte: Google Earth Pro, 2026.](figuras/NITE02_img34_meta.png){#fig-NITE02_img34_meta fig-align="center" width=60%}
+
+Conforme @bishop_pattern_2006, o pré-processamento consiste em transformações nas variáveis de entrada resultando em um novo espaço de variáveis. O intuito é favorecer o reconhecimento de padrões com aprendizado de máquina, assim como acelerar a etapa posterior de processamento. A redução de interferências ambientais e a segmentação entre componentes da imagem, como continente, barco e mar, são operações comuns de pré-processamento na detecção de embarcações [@kanjir_vessel_2018; @li_ship_2021]. Sendo assim, o pré-processamento é uma das principais etapas nos fluxos de trabalho para a detecção de embarcações com aprendizado de máquina utilizando imagens ópticas de satélite como dados de entrada (@fig-ship_workflow). 
+
+![Esquema comum de fluxo de trabalho na detecção de embarcações generalizado de uma revisão da literatura. Fonte: @li_ship_2021](figuras/li_workflow.jpg){#fig-ship_workflow fig-align="center" width=60%}
+
+Diante do exposto, o presente trabalho objetivou testar a implementação de algoritmos de aprendizado de máquina no pré-processamento de imagens ópticas de satélite de ambientes marinhos com a presença de embarcações. Este teste de implementação, ao demonstrar potenciais de aprimoramentos e aplicação, trará algumas possibilidades de pré-processamento como (1) nas imagens que irão compor a base de dados para treinamento de algoritmos de aprendizado profundo e (2) no fluxo de trabalho do modelo entregue para a sua aplicação em problemas reais. Um dos problemas reais é a detecção de embarcações de pesca em Áreas Marinhas Protegidas para o controle, monitoramento e fiscalização da pesca ilegal, não regulamentada e não reportada [@welch2022_unseen_vessels; @welch2024_global_fishing_ai]. 
 
 # Fundamentação teórica
 
@@ -57,17 +71,23 @@ A área da inteligência artificial tem o aprendizado de máquina como subárea.
 
 O aprendizado através da experiência está fortemente relacionado ao reconhecimento de padrões. @bishop_pattern_2006 comenta como o ato de reconhecer padrões acompanha a história da espécie humana e continua no momento em que tais descobertas se automatizaram por algoritmos computacionais. Dentro disso, o autor argumenta que melhores resultados podem ser obtidos através do aprendizado de máquina. Essa tecnologia utiliza algoritmos computacionais para a descoberta automática de regularidades em conjuntos de dados, aplicando esse conhecimento em regressões e classificações. O objetivo central é criar modelos capazes de generalizar suas ações para dados que não foram incluídos no treinamento inicial [@bishop_pattern_2006]. Para @russell_inteligencia_2013, a partir de uma coleção de pares de entrada e saída, o aprendizado de máquina permite se descobrir uma função que prevê a saída para novas entradas.
 
-Existem três tipos ou feedbacks principais de aprendizagem de máquina: não supervisionado, supervisionado e por reforço. No aprendizado não supervisionado, o agente aprende padrões na entrada sem nenhum feedback explicitamente fornecido [@russell_inteligencia_2013]. Em outras palavras, o treinamento do algoritmo compreende dados de entrada sem qualquer dado de saída correspondente [@bishop_pattern_2006]. Um dos objetivos do aprendizado supervisionado é agrupar dados similares e separar dados dissimilares. Exemplos de algoritmos
+Existem três tipos ou *feedbacks* principais de aprendizagem de máquina: não supervisionado, supervisionado e por reforço. No aprendizado não supervisionado, o agente aprende padrões na entrada sem nenhum feedback explicitamente fornecido [@russell_inteligencia_2013]. Em outras palavras, o treinamento do algoritmo compreende dados de entrada sem qualquer dado de saída correspondente [@bishop_pattern_2006]. Um dos objetivos do aprendizado não supervisionado é agrupar dados similares e separar dados dissimilares. Exemplos de algoritmos incluem K-Means, Affinity propagation, Mean-shift, Spectral clustering, Hierarquical clustering, Agglomerative clustering, DBSCAN, HDBSCAN, OPTICS, Gaussian mixtures e Bisecting K-means, com os nomes em inglês mantidos conforme a documentação da biblioteca scikit-learn [@scikit-learn].
 
-O aprendizado supervisionado, por outro lado, compreende     
+No aprendizado supervisionado, diferentemente, o conjunto de treinamento compreende os dados de entrada acompanhados dos dados de saída correspondentes, chamados de rótulos ou alvos [@bishop_pattern_2006]. Ou seja, o treinamento consiste em fornecer exemplos de pares de entrada e saída para que o algoritmo aprenda uma função que mapeie esse processamento [@russell_inteligencia_2013]. Quando a saída desejada for um conjunto finito de valores, tem-se um problema de classificação e quando for um número contínuo, tem-se um problema de regressão [@bishop_pattern_2006; @russell_inteligencia_2013]. Há diferentes abordagens de aprendizado supervisionado e cada uma inclui distintos algoritmos, por exemplo Modelos lineares, Máquinas de Vetores de Suporte, modelos baseados em Gradiente Descendente Estocástico, Vizinhos pŕoximos, Naive Bayes e Árvores de decisão [@scikit-learn].
+
+O aprendizado por reforço funciona de uma forma particular. Ao invés de descobrir agrupamentos ou saídas ótimas como nos outros aprendizados, os algoritmos de aprendizado por reforço vão aprendendo as ações mais adequadas para determinado contexto conforme punições e recompensas. Ou seja, aprendem or um processo de tentativa e erro [@bishop_pattern_2006]. Algoritmos de aprendizado por reforço incluem Q-Learning e SARSA e já são considerados como aprendizado profundo [@zhang2023_dive_deep_learning].
 
 # Metodologia
 
-Descrição do dataset utilizado, preparação dos dados e ferramentas adotadas.
+Descrever metodologia
 
 # Desenvolvimento
 
-Aplicação prática das técnicas de IA propostas. Escolher uma das quatro alternativas. Escolher pelo menos duas opções A, B, C.
+## DBSCAN 
+DBSCAN (Ester et al., 1996)
+
+## kNN
+pacote R dbscan, incluindo kNNdisplot (Hashler et al., 2019)
 
 # Resultados
 
