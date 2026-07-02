@@ -1,5 +1,6 @@
 # TODO
 # Cabeçalho
+# Refatorar para casos original, DBSCAN, com e sem blurring
 
 # Fonte: https://asgr.github.io/imager/foreground_background.html#gradient-based-algorithm
 # The first approach is similar to the SIOX algorithm implemented in the Gimp. 
@@ -19,7 +20,7 @@ library(imager)
 
 # Definir diretório de trabalho, se necessário
 getwd()
-setwd("/media/ramaleticia/3202be5f-767f-4a29-8b6f-7301fe013db6/mca/aprendizado_maquina_COMPLETAR_REPOSITORIO_GITHUB/vers/atividade_avaliativa/dbscan_knn_satellite_ship_rgb_images/knn")
+setwd("/media/ramaleticia/3202be5f-767f-4a29-8b6f-7301fe013db6/mca/aprendizado_maquina_COMPLETAR_REPOSITORIO_GITHUB_SALVAR_MATERIAIS_AULA_ANITA/vers/atividade_avaliativa/dbscan_knn_satellite_ship_rgb_images/knn")
 
 ## X = dados de treino
 ## Xp = dados de teste
@@ -34,13 +35,17 @@ fknn <- function(X, Xp, cl, k = 1)
 
 # Carregar imagens
 # Imagem original
-id_img <- "20260623_RJ_add02_img86_prop0.1_eps5.5_minPts6"
+id_img <- "RJ_add02_img86"
 img <- load.image(paste0(id_img, ".jpg"))
 plot(img)
 
 # Melhor resultado do dbscan até o momento
-# img <- load.image("knn/20260623_RJ_add02_img86_prop0.1_eps5.5_minPts6.jpg")
+# img <- load.image("20260623_RJ_add02_img86_prop0.1_eps5.5_minPts6.jpg")
 # plot(img)
+
+# Imagem com denoising
+img <- isoblur(img, 5)
+plot(img)
 
 # Rodar kNN para imagem original e imagem dbscan
 
@@ -102,40 +107,56 @@ test.mat <- cvt.mat(px.all(img))
 # A saída é a proporção de pixels do foreground pixels entre k vizinhos mais próximos
 # funciona como uma medida de confiança
 
-# Teste com 6-nn
+# # Teste com 6-nn
+# k <- 6
+# knn6 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+# mask6 <- as.cimg(rep(knn6, 3), dim = dim(img))
+# plot(mask6)
+# title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
+
+# Teste com 6-nn com denoising original
 k <- 6
 knn6 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
 mask6 <- as.cimg(rep(knn6, 3), dim = dim(img))
 plot(mask6)
-title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
+id_img <- "RJ_add02_img86"
+title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " original e com aplicação de denoising = 5"))
 
-# Teste com 5-nn
-k <- 5
-knn5 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
-mask5 <- as.cimg(rep(knn5, 3), dim = dim(img))
-plot(mask5)
-title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
+# Teste com 6-nn com denoising DBSCAN
+# k <- 6
+# knn6 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+# mask6 <- as.cimg(rep(knn6, 3), dim = dim(img))
+# plot(mask6)
+# id_img <- "RJ_add02_img86"
+# title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN e com aplicação de denoising = 5"))
 
-# Teste com 4-nn
-k <- 4
-knn4 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
-mask4 <- as.cimg(rep(knn4, 3), dim = dim(img))
-plot(mask4)
-title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
+# # Teste com 5-nn
+# k <- 5
+# knn5 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+# mask5 <- as.cimg(rep(knn5, 3), dim = dim(img))
+# plot(mask5)
+# title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
 
-# Teste com 3-nn
-k <- 3
-knn3 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
-mask3 <- as.cimg(rep(knn3, 3), dim = dim(img))
-plot(mask3)
-title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
+# # Teste com 4-nn
+# k <- 4
+# knn4 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+# mask4 <- as.cimg(rep(knn4, 3), dim = dim(img))
+# plot(mask4)
+# title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
 
-# Teste com 2-nn
-k <- 2
-knn2 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
-mask2 <- as.cimg(rep(knn2, 3), dim = dim(img))
-plot(mask2)
-title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
+# # Teste com 3-nn
+# k <- 3
+# knn3 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+# mask3 <- as.cimg(rep(knn3, 3), dim = dim(img))
+# plot(mask3)
+# title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
+
+# # Teste com 2-nn
+# k <- 2
+# knn2 <- fknn(rbind(mat.fg, mat.bg), test.mat, cl = labels, k = k)
+# mask2 <- as.cimg(rep(knn2, 3), dim = dim(img))
+# plot(mask2)
+# title(main = paste0("Segmentação binária de ", k, "-NN para ", id_img, " processada com DBSCAN"))
 
 # TODO
 # Entender melhor o código

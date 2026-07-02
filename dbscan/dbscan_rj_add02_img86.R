@@ -18,6 +18,8 @@ rj_add02_img86 <- load.image(paste0(img, ".jpg"))
 # Visualizar a imagem
 plot(rj_add02_img86)
 
+rj_add02_img86
+
 # Transformação das imagens para matrizes numéricas baseadas no RGB por pixel
 rj_add02_img86_matriz <- as.data.frame(rj_add02_img86, wide = "c")
 
