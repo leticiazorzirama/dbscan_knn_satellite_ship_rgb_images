@@ -67,7 +67,7 @@ minPts <- dim(rj_norm_rgb)[2] + 1
 
 # Eps (epsilon) com base no método de elbow
 kNNdistplot(rj_norm_rgb, minPts = minPts) 
-eps <- 5.7
+eps <- 6.3
 abline(h = eps, lty = 2)
 title(main = paste0(img, " - Definição do eps para o DBSCAN com base no 'elbow' com minPts = ", minPts))
 
@@ -87,6 +87,22 @@ knndistplot
 tempo_treino <- system.time({
 rj_norm_rgb_dbscan_model <- dbscan(rj_norm_rgb, eps = eps, minPts = minPts)
 })
+
+# Avaliar com o DBCV
+
+# Amostra
+dbcv_amostra <-  rj_norm_rgb %>%
+  mutate(cluster = rj_norm_rgb_dbscan_model$cluster) %>%
+  group_by(cluster) %>%
+  slice_sample(prop = 0.01) %>%
+  ungroup()
+
+# Separar clusters dos dados de entrada que treinaram o DBSCAN
+dbcv_amostra_x <- dbcv_amostra %>% select(-cluster)
+dbcv_amostra_cluster <- dbcv_amostra %>% select(cluster)
+
+# Aplicar o DBCV
+dbcv_results <- dbcv(dbcv_amostra_x, dbcv_amostra_cluster) # ainda quebrando
 
 # Predição com o dbscan com a matriz original com mensuração do tempo cronológico e uso de processador
 tempo_predicao <- system.time({ 
